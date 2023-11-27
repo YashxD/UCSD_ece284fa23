@@ -25,7 +25,6 @@ assign out_e = a_q;
 assign inst_e = inst_q;
 assign out_s = mac_out;
 
-
 mac #(.bw(bw), .psum_bw(psum_bw)) mac_instance (
  .a(a_q), 
  .b(b_q),
@@ -53,12 +52,5 @@ always @(posedge clk) begin
     else if (load_ready_q == 0) begin
         inst_q[0] <= inst_w[0];
     end
-
-    //else if (inst_q[1]) begin               // Execute MAC operation
-        //a_q <= in_w;
-        //c_q <= in_n;
-        //out_s = mac_out;
-    //end
 end
-
 endmodule

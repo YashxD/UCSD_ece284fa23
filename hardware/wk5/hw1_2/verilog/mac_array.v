@@ -27,7 +27,7 @@ module mac_array (clk, reset, out_s, in_w, in_n, inst_w, valid);
         mac_row #(.bw(bw), .psum_bw(psum_bw)) mac_row_instance (
          .clk(clk),
          .out_s(temp_psum[psum_bw*col*(i+1)-1:psum_bw*col*i]),
-         .in_w(temp_in_w[bw*i-1:bw*(i-1)]),
+         .in_w(in_w[bw*i-1:bw*(i-1)]),
          .in_n(temp_psum[psum_bw*col*i-1:psum_bw*col*(i-1)]),
          .valid(temp_valid[col*i-1:col*(i-1)]),
          .inst_w(temp_inst[i*2-1:(i-1)*2]),
@@ -36,16 +36,6 @@ module mac_array (clk, reset, out_s, in_w, in_n, inst_w, valid);
     end
 
     always @ (posedge clk) begin
-        // Supply inputs at clock edge
-        temp_in_w[bw-1:0] <= in_w[bw-1:0];
-        temp_in_w[bw*2-1:bw] <= in_w[bw*2-1:bw];
-        temp_in_w[bw*3-1:bw*2] <= in_w[bw*3-1:bw*2];
-        temp_in_w[bw*4-1:bw*3] <= in_w[bw*4-1:bw*3];
-        temp_in_w[bw*5-1:bw*4] <= in_w[bw*5-1:bw*4];
-        temp_in_w[bw*6-1:bw*5] <= in_w[bw*6-1:bw*5];
-        temp_in_w[bw*7-1:bw*6] <= in_w[bw*7-1:bw*6];
-        temp_in_w[bw*8-1:bw*7] <= in_w[bw*8-1:bw*7];
-        
         temp_inst[1:0] <= inst_w;
         temp_inst[3:2] <= temp_inst[1:0];
         temp_inst[5:4] <= temp_inst[3:2];
@@ -56,7 +46,4 @@ module mac_array (clk, reset, out_s, in_w, in_n, inst_w, valid);
         temp_inst[15:14] <= temp_inst[13:12];
  
     end
-
-
-
 endmodule
